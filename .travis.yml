@@ -1,2 +1,1 @@
 language: go
-script: go test github.com/Nightgunner5/yet-another-game-engine/... -v -bench .

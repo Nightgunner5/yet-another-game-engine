@@ -1,11 +1,12 @@
 package scheduler
 
 import (
-	"time"
 	"testing"
+	"time"
 )
 
 type thinkOnce chan time.Duration
+
 func (t thinkOnce) Think(delta time.Duration) (delay time.Duration) {
 	t <- delta
 
@@ -21,7 +22,7 @@ func TestImmediateThink(t *testing.T) {
 	time.Sleep(5 * time.Millisecond)
 	select {
 	case d := <-thinker:
-		if d > 5 * time.Millisecond {
+		if d > 5*time.Millisecond {
 			t.Errorf("Delta was longer than 5ms (%s)", d)
 		}
 	default:
@@ -31,7 +32,7 @@ func TestImmediateThink(t *testing.T) {
 
 func TestDelayedThink(t *testing.T) {
 	thinker := make(thinkOnce)
-	ScheduleThinkDelayed(thinker, 10 * time.Millisecond)
+	ScheduleThinkDelayed(thinker, 10*time.Millisecond)
 
 	time.Sleep(5 * time.Millisecond)
 	select {
@@ -44,7 +45,7 @@ func TestDelayedThink(t *testing.T) {
 	time.Sleep(10 * time.Millisecond)
 	select {
 	case d := <-thinker:
-		if d < 10 * time.Millisecond {
+		if d < 10*time.Millisecond {
 			t.Errorf("Think was only delayed by %s, not 10ms as requested", d)
 		}
 	default:
